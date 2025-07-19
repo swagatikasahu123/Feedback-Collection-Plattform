@@ -8,6 +8,8 @@ function CreateForm() {
   const [questions, setQuestions] = useState([{ questionText: "" }]);
   const navigate = useNavigate();
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   const handleQuestionChange = (index, value) => {
     const updated = [...questions];
     updated[index].questionText = value;
@@ -33,7 +35,7 @@ function CreateForm() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "https://feedback-collection-plattform.onrender.com/api/forms/create",
+        `${baseURL}/api/forms/create`,
         { title, questions },
         { headers: { Authorization: `Bearer ${token}` } }
       );
