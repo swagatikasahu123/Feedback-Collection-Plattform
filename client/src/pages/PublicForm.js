@@ -7,11 +7,13 @@ function PublicForm() {
   const [form, setForm] = useState(null);
   const [answers, setAnswers] = useState([]);
 
+  const baseURL = process.env.REACT_APP_API_URL;
+
   // Fetch form data when page loads
   useEffect(() => {
     const fetchForm = async () => {
       try {
-        const res = await axios.get(`https://feedback-collection-plattform.onrender.com/api/forms/${formId}`);
+        const res = await axios.get(`${baseURL}/api/forms/${formId}`);
         setForm(res.data);
         setAnswers(res.data.questions.map(() => "")); // Initialize empty answers
       } catch (err) {
@@ -20,7 +22,7 @@ function PublicForm() {
     };
 
     fetchForm();
-  }, [formId]);
+  }, [formId, baseURL]);
 
   // Submit feedback
   const handleSubmit = async () => {
@@ -30,11 +32,12 @@ function PublicForm() {
     }));
 
     try {
-      await axios.post(`https://feedback-collection-plattform.onrender.com/api/responses/${formId}`, {
+      await axios.post(`${baseURL}/api/responses/${formId}`, {
         answers: response
       });
       alert("✅ Thanks for your feedback!");
     } catch (err) {
+      console.error(err);
       alert("❌ Error submitting feedback");
     }
   };
