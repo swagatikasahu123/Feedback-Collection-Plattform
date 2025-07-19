@@ -11,7 +11,7 @@ function PublicForm() {
   useEffect(() => {
     const fetchForm = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/forms/${formId}`);
+        const res = await axios.get(`https://feedback-collection-plattform.onrender.com/api/forms/${formId}`);
         setForm(res.data);
         setAnswers(res.data.questions.map(() => "")); // Initialize empty answers
       } catch (err) {
@@ -30,7 +30,7 @@ function PublicForm() {
     }));
 
     try {
-      await axios.post(`http://localhost:5000/api/responses/${formId}`, {
+      await axios.post(`https://feedback-collection-plattform.onrender.com/api/responses/${formId}`, {
         answers: response
       });
       alert("✅ Thanks for your feedback!");
